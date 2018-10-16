@@ -1,0 +1,1 @@
+﻿<%@ WebHandler Language="C#" CodeBehind="inavAdFile_upload.ashx.cs" Class="Web.kindeditor.asp.net.inavAdFile_upload" %>
