@@ -132,20 +132,20 @@ export default {
             tab:false,
             // activeitem:'1',              //选中的菜单栏
             dashboard:true,               //用于权限分配v-if
-            rolemg:false,                   //角色管理
-            customs:false,                   //客户管理
-            adsmg:false,                     //广告审核
-            opsmg:false,                     //运营管理
-            agentsmg:false,                      //代理商管理
-            agentfinance:false,                 //代理商财务
-            finance:false,                       //财务管理
-            inavad:false,                        //互动类广告
-            anli:false,                          //案例管理
-            nodemonitor:false,                   //节点管理
-            flowsmg:false,                       //流量方管理
-            salesmg:false,                       //销售管理
-            othersmg:false,                      //其它设置
-            wxredpack:false,                     //微信红包
+            rolemg:true,                   //角色管理
+            customs:true,                   //客户管理
+            adsmg:true,                     //广告审核
+            opsmg:true,                     //运营管理
+            agentsmg:true,                      //代理商管理
+            agentfinance:true,                 //代理商财务
+            finance:true,                       //财务管理
+            inavad:true,                        //互动类广告
+            anli:true,                          //案例管理
+            nodemonitor:true,                   //节点管理
+            flowsmg:true,                       //流量方管理
+            salesmg:true,                       //销售管理
+            othersmg:true,                      //其它设置
+            wxredpack:true,                     //微信红包
         }
     },
     computed: {
