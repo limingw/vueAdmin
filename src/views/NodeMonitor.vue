@@ -64,6 +64,11 @@
             :key="index">
             <li>{{item.AdId}}</li>
             <li>{{item.Ecpm}}</li>
+            <li>
+              <el-input v-model="item.Num" placeholder="1-100" maxlength="3"></el-input>
+              <el-button type="primary" @click="revise(item)" size="small">确认</el-button>
+            </li>
+            <li>{{item.FinalEcpm}}</li>
           </ul>
           <div class="ulnoinfo" v-show="noinfo">
             <span>暂无数据</span>
@@ -117,7 +122,7 @@
         }
       },
       methods:{
-        search(){                //查询
+        GetNodeDetail(){                 //获取节点列表
           var _this=this;
           _this.ulitem=[];
           _this.ulitems=[];
@@ -125,57 +130,87 @@
           var flowtype='';
           var sourcetype='';
           var queuetype='';
-
-          if(_this.terrace=='微信'){
-            flowtype=0;
-          }else{
-            flowtype=Number(_this.terrace);
-          }
-          if(_this.shape=='文字链'){
-            sourcetype=2;
-          }else{
-            sourcetype=Number(_this.shape);
-          }
-          if(_this.sort=='TOP'){
-            queuetype=1;
-          }else{
-            queuetype=Number(_this.sort);
-          }
-
-          _this.$http.post('/Admin/NodeMonitor/GetNodeDetail',{
-            flowType:flowtype,
-            sourceType:sourcetype,
-            queueType:queuetype,
-          }).then(function(responses){
-            var info=responses.data;
-            if(info==""||info==null||info==0){
-              _this.noinfo=true;
-              _this.pagin=false;
+            if(_this.terrace=='微信'){
+              flowtype=0;
             }else{
-              var infolist=JSON.parse(info.list);
-              if(infolist.length>0||infolist!=null||infolist!=''){
-                if(infolist.length>_this.pagesize){
-                  _this.pagin=true;
-                }
-                for (let index = 0; index < infolist.length; index++) {
-                  _this.ulitems.push(infolist[index]);
-                }
-                for (let index = 0; index < _this.pagesize; index++) {
-                  _this.ulitem.push(_this.ulitems[index]);
-                }
-                _this.total=_this.ulitems.length;
-                _this.noinfo=false;
-              }else{
-                _this.noinfo=true;
-              }
+              flowtype=Number(_this.terrace);
             }
-          }).catch(function(error){
-            console.log(error);
-            _this.$message({
-              message:'服务器错误',
-              type:'error'
+            if(_this.shape=='文字链'){
+              sourcetype=2;
+            }else{
+              sourcetype=Number(_this.shape);
+            }
+            if(_this.sort=='TOP'){
+              queuetype=1;
+            }else{
+              queuetype=Number(_this.queuetype);
+            }
+
+            _this.$http.post('/Admin/NodeMonitor/GetNodeDetail',{
+              flowType:flowtype,
+              sourceType:sourcetype,
+              queueType:queuetype,
+            }).then(function(responses){
+              var info=responses.data;
+              if(info==""||info==null||info==0){
+                _this.noinfo=true;
+                _this.pagin=false;
+              }else{
+                var infolist=JSON.parse(info.list);
+                if(infolist.length>0||infolist!=null||infolist!=''){
+                  if(infolist.length>_this.pagesize){
+                    _this.pagin=true;
+                  }
+                  for (let index = 0; index < infolist.length; index++) {
+                    _this.ulitems.push(infolist[index]);
+                  }
+                  for (let index = 0; index < _this.pagesize; index++) {
+                    _this.ulitem.push(_this.ulitems[index]);
+                  }
+                  _this.total=infolist.length;
+                  _this.noinfo=false;
+                }else{
+                  _this.noinfo=true;
+                }
+              }
+            }).catch(function(error){
+              console.log(error);
+              _this.$message({
+                message:'服务器错误',
+                type:'error'
+              });
             });
-          });
+        },
+        search(){                //查询
+          var _this=this;
+          _this.GetNodeDetail();
+        },
+        revise(item){                //修改ECPM值
+          var _this=this;
+          var regnum = /^[0-9]+([.]{1}[0-9]+){0,1}$/;    //数字正则
+          if (!regnum.test(item.Num)) {
+              $.message({
+                  message: '请输入正确的数值',
+                  type: 'warning'
+              });
+              return;
+          } else if (100 <parseFloat(item.Num) || parseFloat(item.Num)< 0) {
+              $.message({
+                  message: '请输入0~100的数值',
+                  type: 'warning'
+              });
+              return;
+          } else {
+              var datainfo = {
+                  adId: id,
+                  num: parseFloat(item.Num)
+              };
+              _this.$http.post('/Admin/NodeMonitor/SetEcpmNum').then(function(response){
+                if(response.data.code=='ok'){
+                  
+                }
+              });
+          }
         },
         handleSizeChange(val) {    //分页功能
           this.pagesize=val;
@@ -229,57 +264,7 @@
               _this.shapes.push(response.data[item]);
             }
             _this.shape=_this.shapes[0].name;
-
-            if(_this.terrace=='微信'){
-              flowtype=0;
-            }else{
-              flowtype=Number(_this.terrace);
-            }
-            if(_this.shape=='文字链'){
-              sourcetype=2;
-            }else{
-              sourcetype=Number(_this.shape);
-            }
-            if(_this.sort=='TOP'){
-              queuetype=1;
-            }else{
-              queuetype=Number(_this.queuetype);
-            }
-
-            _this.$http.post('/Admin/NodeMonitor/GetNodeDetail',{
-              flowType:flowtype,
-              sourceType:sourcetype,
-              queueType:queuetype,
-            }).then(function(responses){
-              var info=responses.data;
-              if(info==""||info==null||info==0){
-                _this.noinfo=true;
-                _this.pagin=false;
-              }else{
-                var infolist=JSON.parse(info.list);
-                if(infolist.length>0||infolist!=null||infolist!=''){
-                  if(infolist.length>_this.pagesize){
-                    _this.pagin=true;
-                  }
-                  for (let index = 0; index < infolist.length; index++) {
-                    _this.ulitems.push(infolist[index]);
-                  }
-                  for (let index = 0; index < _this.pagesize; index++) {
-                    _this.ulitem.push(_this.ulitems[index]);
-                  }
-                  _this.total=infolist.length;
-                  _this.noinfo=false;
-                }else{
-                  _this.noinfo=true;
-                }
-              }
-            }).catch(function(error){
-              console.log(error);
-              _this.$message({
-                message:'服务器错误',
-                type:'error'
-              });
-            });
+            _this.GetNodeDetail();
           }else{
             _this.shapes=[];
             _this.noinfo=true;

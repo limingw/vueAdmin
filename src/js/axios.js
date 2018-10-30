@@ -7,12 +7,13 @@ import '../assets/js/jquery.min.js'
 Axios.interceptors.response.use(function(config){
   var zht=getCookie('admin_info_zht');
   var info=config.data;
+  var _this=this;
   // let temp = info.toString();
   if (Object.prototype.toString.call(info) === "[object String]") {
     var temp=info.toString();
     if(temp.indexOf('top.location.href = location.href;') !==-1){
       //alert('登录身份过期，请重新登录');
-      window.location.href='/';
+      _this.$router.push({path: '/login'});
       return;
     }
     return config;

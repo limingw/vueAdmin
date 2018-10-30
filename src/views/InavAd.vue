@@ -40,11 +40,19 @@
 
       <div class="flowinfo">
         <el-row class="rowflowy">
-          <el-col :span="6" :offset="4" class="elflowy">
+          <el-col :span="5" :offset="3" class="elflowy">
             <span>流量方昨日访问总量：{{index.flowy}}</span>
           </el-col>
 
-          <el-col :span="5" :offset="0" class="elflowurl">
+          <el-col :span="4" class="elflowy">
+            <span>流量方当日总曝光：{{index.exposure}}</span>
+          </el-col>
+
+          <el-col :span="5" class="elflowy">
+            <span>流量方弹窗当日总曝光：{{index.pop_exposure}}</span>
+          </el-col>
+
+          <el-col :span="5" class="elflowurl">
             <span>流量方访问链接</span>
           </el-col>
         </el-row>
@@ -61,8 +69,16 @@
             </el-select>
           </el-col>
 
-          <el-col :span="6" :offset="1" class="elflowt">
+          <el-col :span="5" class="elflowt">
             <span>流量方今日访问总量：{{index.flowt}}</span>
+          </el-col>
+
+          <el-col :span="4" class="elflowy">
+            <span>流量方当日总曝光：{{index.clicks}}</span>
+          </el-col>
+
+          <el-col :span="5" class="elflowy">
+            <span>流量方弹窗当日总曝光：{{index.pop_clicks}}</span>
           </el-col>
 
           <el-col :span="5" :offset="0" class="elinput">
@@ -72,11 +88,13 @@
           <el-col :span="1" class="elcopy">
             <el-button type="primary" :disabled="index.copybtn" @click="copyurl()">复制</el-button>
           </el-col>
+        </el-row>
 
+        <!-- <el-row class="underall">
           <el-col :span="2" class="elunder" v-if="index.underbtn">
             <el-button type="primary" @click="underall()">全部下架</el-button>
           </el-col>
-        </el-row>
+        </el-row> -->
       </div>
 
       <div class="table">
@@ -601,6 +619,10 @@
           placeh:'请选择',  
           flowy:0,             //流量方昨日访问总量
           flowt:0,               //流量方今日访问总量
+          exposure:0,                  //总曝光
+          pop_exposure:0,              //弹窗总曝光
+          clicks:0,                     //总点击
+          pop_clicks:0,                 //弹窗总点击
           flowurl:'',               //流量方访问链接
           copybtn:false,           //复制按钮禁用
           underbtn:true,            //全部下架按钮
@@ -909,6 +931,22 @@
           });
         });
       },
+      GetTodayInfo(){                     //获取点击和曝光
+        var _this=this;
+        _this.$http.post('/Admin/InavAd/GetAllShowAndClick').then(function(response){
+          var info=response.data;
+          _this.index.exposure=info.ShowTimes;
+          _this.index.clicks=info.ClickTimes;
+          _this.index.pop_exposure=info.PopWinShowTimes;
+          _this.index.pop_clicks=info.PopWinClickTimes;
+        }).catch(function(error){
+          console.log(error);
+          _this.$message({
+            message:'服务器错误',
+            type:'error'
+          });
+        });
+      },
       seartime(){       //查询时间按钮
         var _this=this;
         if(this.details.time==''){
@@ -1089,7 +1127,7 @@
                 setTimeout(function(){
                   _this.index.index=true;
                   _this.addinav.index=false;
-                  _this.getinavAdmgLists(_this.index.currentPage,_this.index.pagesize);
+                  _this.getinavAdmgLists(_this.index.currentPage,_this.index.pagesize,_this.index.select);
                 },1500);
               }
               repeat=false;
@@ -1900,6 +1938,7 @@
       });
 
       _this.GetAdClassList();   //初始化广告品类
+      _this.GetTodayInfo();       //获取点击和曝光
     },
   }
 </script>

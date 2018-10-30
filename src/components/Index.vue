@@ -49,6 +49,7 @@
   import '../js/axios.js'
   import '../css/common.less'
   import '../css/index.less'
+import { getCookie } from '../util/util.js';
   
 
   export default {
@@ -211,29 +212,25 @@
         this.$store.commit('TabActiveChange', activeName);
         this.$store.commit('RemoveLinks', targetName);
       },
-      // clearCanvas()
-      // {  
-      //   var c=document.getElementById("c_n1");  
-      //   var cxt=c.getContext("2d");  
-      //   c.height=0;
-      //   c.width=0;
-      // }  
     },
     created: function () {
       this.$router.push({path: '/Dashboard'});
-      // this.clearCanvas();
       for (let index = 0; index < 10; index++) {
         $('#c_n'+index).css('display','none');
       }
       var staffname=localStorage.getItem('staffname');
       var role=localStorage.getItem('role');
-      if(staffname==null||staffname==''){
-        alert('请先登录！');
-        window.location.href='/#/';
+      if(staffname==null||staffname==''){        //验证身份
+        this.$router.push({path: '/login'});
         return;
       }else if(role==null||role==''){
-        alert('请先登录！');
-        window.location.href='/#/';
+        this.$router.push({path: '/login'});
+        return;
+      }
+
+      var zht=getCookie('admin_info_zht');
+      if(zht==''||zht==null){
+        this.$router.push({path: '/login'});
         return;
       }
       

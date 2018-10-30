@@ -827,7 +827,7 @@
         this.index.audit=false;
         this.index.cusaudit=true;
         var _this=this;
-        this.$http.post('Admin/Customs/CheckInfo',{
+        _this.$http.post('/Admin/Customs/CheckInfo',{
           CustomId:row.CustomId
         }).then(function(response){
           var info=response.data;

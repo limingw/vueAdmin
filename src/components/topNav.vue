@@ -36,13 +36,13 @@
                             type:'success'
                         });
                     }).catch(function(error){
-                        _this.$message({
-                            message:'服务器错误，即将跳转到登录页面',
+                       _this.$message({
+                            message:'退出成功，即将跳转到登录页面',
                             type:'success'
                         });
                     });
                     setTimeout(function(){
-                        window.location.href='/';
+                        _this.$router.push({path: '/login'});
                     },1500);
                  }
              }

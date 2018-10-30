@@ -540,7 +540,7 @@
           if(companyname!=''||companyname!=null){    //用于搜索
             params={
               pageSize:pageSize,
-              pageNo:currentpage,
+              pageNo:(currentpage-1)*pageSize,
               companyName:companyname,
               opsStatus:status
             }
@@ -548,7 +548,7 @@
           }else{
             params={
               pageSize:pageSize,
-              pageNo:currentpage,
+              pageNo:(currentpage-1)*pageSize,
               opsStatus:status
             }
           }
@@ -556,13 +556,13 @@
           if(companyname!=''||companyname!=null){
             params={
               pageSize:pageSize,
-              pageNo:currentpage,
+              pageNo:(currentpage-1)*pageSize,
               companyName:companyname,
             }
           }else{
             params={
               pageSize:pageSize,
-              pageNo:currentpage,
+              pageNo:(currentpage-1)*pageSize,
             }
           }
         }
@@ -928,10 +928,10 @@
         }).then(function(response){
           var url=response.data.urlInfo;
           var info=JSON.parse(response.data.custom);
-          if(info.statusCode==1002){
+          if(response.data.statusCode==1001){
             _this.$http.post(url,info).then(function(response){
               if(response.data.status=='ok'){
-                window.open(response.data.direct_url);
+                window.open('/index.html#/CustomHome');
               }else{
                 _this.$message({
                   message:'服务器错误',
@@ -1245,12 +1245,12 @@
                   if(info.IsOpsRole=='OpsDetail'){
                     params={
                       pageSize:_this.operman.pagesize,
-                      pageNo:_this.operman.currentPage
+                      pageNo:(_this.operman.currentPage-1)*_this.operman.pagesize
                     };
                   }else{
                     params={
                       pageSize:_this.index.pagesize,
-                      pageNo:_this.index.currentPage
+                      pageNo:(_this.index.currentPage-1)*_this.index.pagesize
                     };
                   }
                   _this.$http.get('/Admin/OpsMg/'+info.OpsReq+'_vue',{   //根据不同的权限接口查询表格

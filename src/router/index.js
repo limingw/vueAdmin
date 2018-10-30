@@ -23,11 +23,21 @@ Vue.use(Router);
 export default new Router({
   // mode:'history',
   routes: [
-    {      //登录
-      path:'/',
-      name:'Login',
-      component:Login
+    {
+      path: '/',
+      redirect: {
+        name: 'Login'
+      },
+      component:Login,
+      children: [
+        {      //登录
+          path:'/login',
+          name:'Login',
+          component:Login,
+        },
+      ]
     },
+    
     {
       path: '/Index',
       name: 'Index',

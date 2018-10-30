@@ -68,69 +68,16 @@
 					});
 					this.$refs.foccode.focus();
 				}else{
-					// this.$http.post('/Admin/Home/Login',{
-					// 	username:this.name,
-					// 	passwd:md5(this.password),
-					// 	code:this.code
-					// }).then(function(response){
-					// 	if(response.data.status == "ok"){
-                    //         _this.loading=true;
-                    //         setTimeout(function(){
-                    //             _this.loading=false;
-					// 			_this.denglu=true;
-					// 		},800);	
-					// 		setTimeout(function(){
-					// 			_this.$message({
-                    //                 message: '登录成功,即将跳转首页',
-                    //                 type: 'success'
-                    //             });
-					// 		},800);
-					// 		setTimeout(function(){
-					// 			// location.href='/#/Admin/Index';
-					// 			_this.$router.push({path: '/Index'});
-					// 		},2000);
-					// 		//提交全局的vuex用户名
-					// 		localStorage.setItem('staffname',response.data.staffname);
-					// 		localStorage.setItem('role',response.data.role);
-					// 		_this.$store.commit('users',response.data.staffname);			
-					// 	}else if(response.data.status == "no"){
-					// 		_this.loading=true;
-					// 		_this.code='';
-					// 		setTimeout(function(){
-					// 			_this.loading=false;
-					// 		},800);
-					// 		setTimeout(function(){
-					// 			_this.$message({
-					// 				message: response.data.info,
-					// 				type: 'warning'
-					// 			});
-					// 			_this.src='/Admin/Home/getvalidatecode?'+Math.random();
-					// 			if(response.data.info=='验证码错误！'){
-					// 				_this.code='';
-					// 				_this.$refs.foccode.focus();
-					// 			}
-					// 		},1000);
-					// 	}else{
-					// 		_this.loading=true;
-					// 		_this.code='';
-					// 		setTimeout(function(){
-					// 			_this.loading=false;
-					// 		},800);
-					// 		setTimeout(function(){
-					// 			_this.$message({
-					// 				message: response.data.info,
-					// 				type: 'warning'
-					// 			});
-					// 			_this.src='/Admin/Home/getvalidatecode?'+Math.random();
-					// 			if(response.data.info=='验证码错误！'){
-					// 				_this.code='';
-					// 				_this.$refs.foccode.focus();
-					// 			}
-					// 		},1000);
-					// 	}
-					//     }).catch(function (error) {
-   					// 		console.log(error);
-					// });
+					setTimeout(function(){
+								_this.$message({
+                                    message: '登录成功,即将跳转首页',
+                                    type: 'success'
+                                });
+							},800);
+							setTimeout(function(){
+								// location.href='/#/Admin/Index';
+								_this.$router.push({path: '/Index'});
+							},2000);
 				}
 			},
 			// clearCanvas()
@@ -150,6 +97,7 @@
 				$('#c_n'+index).css('display','block');
 				
 			}
+			this.$router.push({path: '/login'});
 		},
 		mounted(){
 			var _this=this;
