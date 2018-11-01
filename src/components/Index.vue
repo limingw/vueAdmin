@@ -218,21 +218,21 @@ import { getCookie } from '../util/util.js';
       for (let index = 0; index < 10; index++) {
         $('#c_n'+index).css('display','none');
       }
-      var staffname=localStorage.getItem('staffname');
-      var role=localStorage.getItem('role');
-      if(staffname==null||staffname==''){        //验证身份
-        this.$router.push({path: '/login'});
-        return;
-      }else if(role==null||role==''){
-        this.$router.push({path: '/login'});
-        return;
-      }
+      // var staffname=localStorage.getItem('staffname');
+      // var role=localStorage.getItem('role');
+      // if(staffname==null||staffname==''){        //验证身份
+      //   this.$router.push({path: '/login'});
+      //   return;
+      // }else if(role==null||role==''){
+      //   this.$router.push({path: '/login'});
+      //   return;
+      // }
 
-      var zht=getCookie('admin_info_zht');
-      if(zht==''||zht==null){
-        this.$router.push({path: '/login'});
-        return;
-      }
+      // var zht=getCookie('admin_info_zht');
+      // if(zht==''||zht==null){
+      //   this.$router.push({path: '/login'});
+      //   return;
+      // }
       
     },
     mounted(){

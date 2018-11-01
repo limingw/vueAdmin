@@ -36,22 +36,23 @@ new Vue({
 
 //路由身份验证
 router.beforeEach((to, from, next) => {
-  if(to.path==='/login'){
-    next();
-  }else{
-    var zht=getCookie('admin_info_zht');
-    var _this=this;
-    if(zht===null&&(to.path==='/Index'||to.path==='/Dashboard'||to.path==='/RoleMg'||
-      to.path==='/Customs'||to.path==='/AdsMg'||to.path==='/OpsMg'||
-      to.path==='/AgentsMg'||to.path==='/Finance'||to.path==='/InavAd'||
-      to.path==='/AnLI'||to.path==='/NodeMonitor'||to.path==='/FlowsMg'||
-      to.path==='/SalesMg'||to.path==='/OthersMg'||to.path==='/WxRedPack'
-    )){
-      alert('登录身份过期，请重新登录');
-      next({path:'/login'});
-    }else{
-      next();
-    }
-    next();
-  }
+  // if(to.path==='/login'){
+  //   next();
+  // }else{
+  //   var zht=getCookie('admin_info_zht');
+  //   var _this=this;
+  //   if(zht===null&&(to.path==='/Index'||to.path==='/Dashboard'||to.path==='/RoleMg'||
+  //     to.path==='/Customs'||to.path==='/AdsMg'||to.path==='/OpsMg'||
+  //     to.path==='/AgentsMg'||to.path==='/Finance'||to.path==='/InavAd'||
+  //     to.path==='/AnLI'||to.path==='/NodeMonitor'||to.path==='/FlowsMg'||
+  //     to.path==='/SalesMg'||to.path==='/OthersMg'||to.path==='/WxRedPack'
+  //   )){
+  //     alert('登录身份过期，请重新登录');
+  //     next({path:'/login'});
+  //   }else{
+  //     next();
+  //   }
+  //   next();
+  // }
+  next();
 });
