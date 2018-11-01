@@ -26,20 +26,20 @@
 			}
         },
         created(){
-            var _this=this;
-            var staffname=localStorage.getItem('staffname');
-            _this.user=staffname;
-            var role=localStorage.getItem('role');
-            if(staffname==null||staffname==''){
-                alert('请先登录！');
-                _this.$router.push({path: '/login'});
-                return;
-            }else if(role==null||role==''){
-                alert('请先登录！');
-                window.location.href='/#/';
-                _this.$router.push({path: '/login'});
-                return;
-            }
+            // var _this=this;
+            // var staffname=localStorage.getItem('staffname');
+            // _this.user=staffname;
+            // var role=localStorage.getItem('role');
+            // if(staffname==null||staffname==''){
+            //     alert('请先登录！');
+            //     _this.$router.push({path: '/login'});
+            //     return;
+            // }else if(role==null||role==''){
+            //     alert('请先登录！');
+            //     window.location.href='/#/';
+            //     _this.$router.push({path: '/login'});
+            //     return;
+            // }
         },
     }
 
